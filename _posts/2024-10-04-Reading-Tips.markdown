@@ -18,7 +18,6 @@ p {
 
 </style>
 
-
 This is servinving as my first blog post for this blog, I don't encourage anyone to read it.
 
 <hr style="border:none; height:1px; background-color: #333;">
