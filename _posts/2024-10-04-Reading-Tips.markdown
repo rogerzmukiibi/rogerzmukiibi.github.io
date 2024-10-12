@@ -24,7 +24,7 @@ This is servinving as my first blog post for this blog, I don't encourage anyone
 <hr style="border:none; height:1px; background-color: #333;">
 <br>
 
-# Review Paper Writing Tips
+**Review Paper Writing Tips**
 1. Read at least five high-quality chapters on a similar topic to make yours better.
 2. Gather and read about 50-100 original articles on a topic within your scientific field.
 3. Write down a list of about 5-8 subtopics that will constitute a draft of your article sections.
@@ -32,7 +32,7 @@ This is servinving as my first blog post for this blog, I don't encourage anyone
 5. Write the introduction section starting by 1-2 paragraphs of societal and general issues, almost readable by the public, and then write 1-2 paragraphs of scientific issues related to your topic. Insert in the introduction a figure containing 1-2 nice color photos related to the topic and readable by the public, this will highly increase the visibility of your review article.
 6. Write the title using both specific and general keywords. Please note that your title must be readable by scientists out of your field, because science is interdisciplinary.
 
-# General Tips
+**General Tips**
 - Keep abbreviation number to a very strict minimum. Explain all abbreviations. Note that most readers are not in your field, and most readers do not read from start to end. This phenomenon called bits reading is amplified by digital reading. In other words an out of the field reader starting reading at e.g. page 5 will not understand an uncommon abbreviation, and will thus stop reading your article.
 - Abbreviations in figures and tables must be explained at the end of the caption.
 - Avoid long, multiverb sentence. Write simple, monoverb sentences in the order subject-verb-object.
