@@ -1,7 +1,7 @@
 ---
 layout: post
 comments: true
-title: Writing Tips
+title: Blog documentation
 excerpt: Documenting my experience when setting up my first blog
 date: 2024-10-12
 mathjax: false
@@ -18,7 +18,7 @@ p {
 
 </style>
 
-I 
+Documenting my experience when setting up my first blog. I already had errors in my first upload 
 
 <hr style="border:none; height:1px; background-color: #333;">
 <br>
