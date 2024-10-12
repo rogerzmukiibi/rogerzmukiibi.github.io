@@ -1,3 +1,29 @@
+---
+layout: post
+comments: true
+title:  "Writing Tips"
+excerpt: "Short notes I collected when learning how to write, most of it is AI generated :)"
+date:   2024-10-04 10:00:00
+mathjax: false
+---
+
+<style>
+p {
+  text-align: justify;
+}
+.post pre, .post code {
+    border: none;
+    background-color: #eee;
+}
+
+</style>
+
+
+This is servinving as my first blog post for this blog, I don't encourage anyone to read it.
+
+<hr style="border:none; height:1px; background-color: #333;">
+<br>
+
 # Review Paper Writing Tips
 1. Read at least five high-quality chapters on a similar topic to make yours better.
 2. Gather and read about 50-100 original articles on a topic within your scientific field.
