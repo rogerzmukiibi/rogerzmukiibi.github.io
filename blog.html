@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1 id="post-title"></h1>
+    <div id="content"></div>
+    <a href="index.html">Back to home</a>
+    <script src="marked.min.js"></script> <!-- Markdown library -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const postFile = urlParams.get("post");
+
+            if (postFile) {
+                fetch(postFile)
+                    .then(response => response.text())
+                    .then(markdown => {
+                        document.getElementById("content").innerHTML = marked.parse(markdown);
+                    });
+            }
+        });
+    </script>
+</body>
+</html>
