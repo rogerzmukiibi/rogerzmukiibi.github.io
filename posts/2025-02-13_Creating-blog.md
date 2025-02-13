@@ -5,8 +5,7 @@ I have been creating different work flows and procratinating the writing process
 
 I have tried using Jekyll bit I think let me go bare with just basic html, css and javascript. 
 
-Lets see how it goes. 
-
+Lets see how it goes.
 
 I will be writing more if it works.
 
