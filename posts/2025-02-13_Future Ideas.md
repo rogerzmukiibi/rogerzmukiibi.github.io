@@ -1,4 +1,4 @@
-# **🚀 Summary of Feature Ideas**
+# 🚀 Summary of Feature Ideas
 
 ✅ Pagination  
 ✅ Categories & Tags  
