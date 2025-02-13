@@ -1,3 +1,4 @@
 [
-  { "title": "My First Blog Post", "date": "2025-02-03", "file": "posts/post1.md" }
+  { "title": "My First Blog Post", "date": "2025-02-03", "file": "posts/post1.md" },
+  { "title": "My Second Blog Post", "date": "2025-02-13", "file": "posts/post2.md" }
 ]
