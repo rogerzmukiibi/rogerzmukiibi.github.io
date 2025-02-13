@@ -10,3 +10,10 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
 });
+document.getElementById("search").addEventListener("input", function () {
+    let search = this.value.toLowerCase();
+    document.querySelectorAll("#posts-list li").forEach(li => {
+        let text = li.textContent.toLowerCase();
+        li.style.display = text.includes(search) ? "block" : "none";
+    });
+});

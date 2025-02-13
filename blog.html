@@ -7,23 +7,43 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <button id="dark-mode-toggle">Dark Mode</button>
+    <script>
+        document.getElementById("dark-mode-toggle").addEventListener("click", function () {
+            document.body.classList.toggle("dark-mode");
+        });
+    </script>
+    <style>
+        .dark-mode { background: #121212; color: #fff; }
+    </style>
+
     <h1 id="post-title"></h1>
     <div id="content"></div>
     <a href="index.html">Back to home</a>
-    <script src="marked.min.js"></script> <!-- Markdown library -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script> <!-- Markdown library -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const urlParams = new URLSearchParams(window.location.search);
             const postFile = urlParams.get("post");
-
+    
             if (postFile) {
-                fetch(postFile)
-                    .then(response => response.text())
+                fetch(`/${postFile}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                        return response.text();
+                    })
                     .then(markdown => {
                         document.getElementById("content").innerHTML = marked.parse(markdown);
+                    })
+                    .catch(error => {
+                        document.getElementById("content").innerHTML = `<p style="color:red;">Error loading post: ${error.message}</p>`;
                     });
+            } else {
+                document.getElementById("content").innerHTML = "<p style='color:red;'>No post specified.</p>";
             }
         });
-    </script>
+    </script>  
 </body>
 </html>
