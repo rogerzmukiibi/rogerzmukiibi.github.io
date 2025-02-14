@@ -22,3 +22,9 @@ a {
   text-decoration: none;
   color: blue;
 }
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 10px auto;
+}

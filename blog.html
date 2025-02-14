@@ -41,6 +41,9 @@
               return response.text();
             })
             .then((markdown) => {
+              // Convert Obsidian-style images ![[filename.png]] to standard Markdown ![](filename.png)
+              markdown = markdown.replace(/!\[\[(.*?)\]\]/g, "![$1]($1)");
+              
               document.getElementById("content").innerHTML =
                 marked.parse(markdown);
             })

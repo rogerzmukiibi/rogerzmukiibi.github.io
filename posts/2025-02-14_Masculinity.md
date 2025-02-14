@@ -32,4 +32,3 @@ NB: A man's conduct must be above suspicion.
 Further references: [into the breach](https://www.kofc.org/en/campaigns/into-the-breach.html)
 
 The presenter left us with this quote from St John Paul II and it is still rent free in my mind.
-![[../images/Pasted image 20250214215418.png]]
