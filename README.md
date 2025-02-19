@@ -1,2 +1,2 @@
 # Portifolio Website
-Based on on al-folio theme.
+Based on al-folio theme.
