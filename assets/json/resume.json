@@ -1,24 +1,24 @@
 {
   "basics": {
-    "name": "Albert Einstein",
-    "label": "Scientist",
+    "name": "Rogers Mukiibi",
+    "label": "Students",
     "image": "",
-    "email": "albert@einstein.de",
-    "phone": "(912) 123-4567",
-    "url": "https://alshedivat.github.io/al-folio/",
-    "summary": "A German-born theoretical physicist, widely ranked among the greatest and most influential scientists of all time",
+    "email": "mukiibirogerz@gmail.com",
+    "phone": "(256) 770 892853",
+    "url": "https://rogerzmukiibi.github.io/",
+    "summary": "Undergrad student at Makerere University, pursuing a Bachelor of Science in Electrical Engineering. I am passionate about technology and I am always looking for ways to improve my skills.",
     "location": {
-      "address": "2712 Broadway St",
-      "postalCode": "CA 94115",
-      "city": "San Francisco",
-      "countryCode": "US",
-      "region": "California"
+      "address": "Makerere University",
+      "postalCode": "256",
+      "city": "Kampala",
+      "countryCode": "UG",
+      "region": "Central"
     },
     "profiles": [
       {
-        "network": "Twitter",
-        "username": "AlbertEinstein",
-        "url": "https://twitter.com/AlbertEinstein"
+        "network": "X",
+        "username": "mukiibirogerz",
+        "url": "https://x.com/mukiibirogerz"
       }
     ]
   },
