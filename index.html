@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Blog</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="assets/favicon_io/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="learning.html">Learning</a></li>
+                <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>Welcome to this corner of the internet</h1>
+            <div class="bio">
+                <p>Hi! I'm <strong>Rogers Mukiibi</strong>, trying to write again! </p>
+            </div>
+        </section>
+
+        <section class="recent-posts">
+            <h2>Recent Posts</h2>
+            <div id="recent-posts-container">
+                <!-- Recent posts will be loaded here by JavaScript -->
+            </div>
+        </section>
+
+        <section class="quick-links">
+            <h2>Quick Links</h2>
+            <div class="links">
+                <a href="learning.html" class="link-card">
+                    <h3>Things I'm Learning</h3>
+                    <p>Current topics and skills I'm exploring</p>
+                </a>
+            </div>
+        </section>
+        <section class="about">
+            <h2>About Me</h2>
+            <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <div class="contact-links">
+                        <a href="mailto:rogersmukiibi@gmail.com" class="contact-link">
+                            <span class="icon">📧</span>
+                            <span>rogersmukiibi@gmail.com</span>
+                        </a>
+                        <a href="https://twitter.com/rogersmukiibi" target="_blank" class="contact-link">
+                            <span class="icon">🐦</span>
+                            <span>Twitter</span>
+                        </a>
+                        <a href="https://linkedin.com/in/rogersmukiibi" target="_blank" class="contact-link">
+                            <span class="icon">💼</span>
+                            <span>LinkedIn</span>
+                        </a>
+                    </div>
+                    <div class="cv-link">
+                        <a href="assets/Rogers_Mukiibi_CV.pdf" target="_blank" class="cv-button">
+                            <span class="icon">📄</span>
+                            <span>Download CV</span>
+                        </a>
+                    </div>
+                </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 My Blog. Built with ❤️ and hosted on GitHub Pages.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
