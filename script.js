@@ -37,6 +37,11 @@ class ThemeManager {
         this.theme = this.theme === 'dark' ? 'light' : 'dark';
         localStorage.setItem('theme', this.theme);
         this.applyTheme();
+        
+        // Track theme toggle in analytics
+        if (window.blogAnalytics) {
+            window.blogAnalytics.trackThemeToggle(this.theme);
+        }
     }
 }
 
