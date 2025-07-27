@@ -120,55 +120,23 @@ class BlogManager {
     }
     
     async loadPosts() {
-        // Load blog posts
-        const blogPosts = [
-            {
-                id: 'getting-started-with-web-development',
-                title: 'Getting Started with Web Development',
-                date: '2025-01-15',
-                excerpt: 'A beginner\'s guide to starting your journey in web development.',
-                type: 'blog'
-            },
-            {
-                id: 'understanding-javascript-closures',
-                title: 'Understanding JavaScript Closures',
-                date: '2025-01-10',
-                excerpt: 'Deep dive into one of JavaScript\'s most important concepts.',
-                type: 'blog'
-            },
-            {
-                id: 'css-grid-vs-flexbox',
-                title: 'CSS Grid vs Flexbox: When to Use Which',
-                date: '2025-01-05',
-                excerpt: 'Practical guide to choosing the right layout system.',
-                type: 'blog'
-            }
-        ];
-        
-        // Load learning posts
-        const learningPosts = [
-            {
-                id: 'learning-react',
-                title: 'Learning React',
-                date: '2025-01-20',
-                excerpt: 'My journey learning React and building modern web applications.',
-                type: 'learning'
-            },
-            {
-                id: 'exploring-nodejs',
-                title: 'Exploring Node.js',
-                date: '2025-01-18',
-                excerpt: 'Backend development with Node.js and Express.',
-                type: 'learning'
-            }
-        ];
-        
-        this.posts = blogPosts;
-        this.learningPosts = learningPosts;
-        
-        // Sort posts by date (newest first)
-        this.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
-        this.learningPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+        try {
+            const response = await fetch('vault/posts/posts.json');
+            if (!response.ok) throw new Error('Could not load posts');
+            const allPosts = await response.json();
+
+            // Separate blog and learning posts
+            this.posts = allPosts.filter(post => post.type === 'blog');
+            this.learningPosts = allPosts.filter(post => post.type === 'learning');
+
+            // Sort posts by date (newest first)
+            this.posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+            this.learningPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+        } catch (error) {
+            console.error('Error loading posts:', error);
+            this.posts = [];
+            this.learningPosts = [];
+        }
     }
     
     async loadMarkdownContent(postId) {
@@ -177,7 +145,10 @@ class BlogManager {
             if (!response.ok) {
                 throw new Error('Post not found');
             }
-            const markdown = await response.text();
+            let markdown = await response.text();
+
+            markdown = markdown.replace(/^---[\s\S]*?---\s*/, '');
+
             return this.parser.parse(markdown);
         } catch (error) {
             console.error('Error loading post:', error);
@@ -273,7 +244,7 @@ class BlogManager {
             </main>
             
             <footer>
-                <p>&copy; 2025 My Blog. Built with ❤️ and hosted on GitHub Pages.</p>
+                <p>&copy; 2025</p>
             </footer>
         `;
         
