@@ -147,7 +147,7 @@ class BlogManager {
             }
             let markdown = await response.text();
 
-            markdown = markdown.replace(/^---[\s\S]*?---\s*/, '');
+            markdown = markdown.replace(/---[\s\S]*?---\s*/, '');
 
             return this.parser.parse(markdown);
         } catch (error) {
