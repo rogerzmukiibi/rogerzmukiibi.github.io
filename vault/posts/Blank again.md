@@ -1,11 +1,3 @@
----
-**Title**: Blank Again
-**Subtitle**: Back to my blank pages
-**Tags**: #first
-**Date**: 2025-07-27
-**Type**: blog
-**Status**: post
----
 I have tried blogging for long, atleast from the time I fancied making personal websites. This year I even got my domain, but truth be said I dont have things to put here. 
 
 But I think I have things to put here, the only problem is that i never get the time to write the content for this page. I always have alot to say but the excuses I have outway my need to write. 
@@ -16,3 +8,11 @@ Today i have devided not to even write a draft, just so that I can put something
 
 Anyway, the blog is in a very bad shape, most links are not working but here we are.
 
+---
+**Title**: Blank Again
+**Subtitle**: Back to my blank pages
+**Tags**: #first
+**Date**: 2025-07-27
+**Type**: blog
+**Status**: post
+---

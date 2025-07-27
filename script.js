@@ -121,7 +121,7 @@ class BlogManager {
     
     async loadPosts() {
         try {
-            const response = await fetch('vault/posts/posts.json');
+            const response = await fetch('vault/scripts/posts.json');
             if (!response.ok) throw new Error('Could not load posts');
             const allPosts = await response.json();
 

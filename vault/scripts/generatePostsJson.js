@@ -1,8 +1,7 @@
 const fs = require('fs');
 const path = require('path');
-
-const postsDir = path.join(__dirname);
-const outputFile = path.join(__dirname, 'posts.json');
+const postsDir = path.join(__dirname, '..', 'posts'); 
+const outputFile = path.join(__dirname, 'posts.json'); 
 
 // Read existing posts.json if it exists
 let existingPosts = [];
@@ -15,7 +14,7 @@ if (fs.existsSync(outputFile)) {
 }
 
 function extractFrontmatter(content) {
-    const match = content.match(/^---([\s\S]*?)---/);
+    const match = content.match(/---([\s\S]*?)---/);
     if (!match) return null;
     const lines = match[1].split('\n').map(line => line.trim()).filter(Boolean);
     const meta = {};
