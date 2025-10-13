@@ -1,6 +1,7 @@
 # Obsidian vault - exclude configuration and drafts
 vault/.obsidian/
 vault/drafts/
+vault/.trash/
 
 # Node modules (if you add any)
 node_modules/
