@@ -81,6 +81,7 @@ Even more content...
 
 ```code
 Code blocks are supported
+ python -m http.server 8000
 ```
 
 [Links](https://example.com) work too.

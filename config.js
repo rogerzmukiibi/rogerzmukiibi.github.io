@@ -19,7 +19,7 @@ const blogConfig = {
     // Social links (optional)
     social: {
         github: "https://github.com/rogerzmukiibi",
-        twitter: "https://twitter.com/rogersmukiibi",
+        twitter: "https://twitter.com/mukiibirogerz",
         linkedin: "https://linkedin.com/in/rogersmukiibi"
     }
 };
