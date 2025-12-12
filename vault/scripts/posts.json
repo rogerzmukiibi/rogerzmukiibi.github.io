@@ -5,5 +5,12 @@
     "date": "2025-07-27",
     "excerpt": "Back to my blank pages",
     "type": "blog"
+  },
+  {
+    "id": "Shower Thoughts",
+    "title": "Shower thoughts 1",
+    "date": "2025-12-12",
+    "excerpt": "{{subtitle}}",
+    "type": "learning"
   }
 ]
