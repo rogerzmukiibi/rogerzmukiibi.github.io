@@ -43,7 +43,11 @@ Blog/
 
 1. Create a new `.md` file in the `posts/` directory
 2. Write your content in Markdown format
-3. Add the post metadata to the `script.js` file in the appropriate array (`posts` for blog posts, `learningPosts` for learning posts)
+3. Add the post metadata to the `script.js` file in the appropriate array (`posts` for blog posts, `learningPosts` for learning posts) by running the command
+
+```bash
+node .\vault\scripts\generatePostsJson.js
+```
 
 ### Post Metadata Format
 
