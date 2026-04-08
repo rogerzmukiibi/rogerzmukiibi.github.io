@@ -265,7 +265,7 @@ class BlogManager {
             </main>
             
             <footer>
-                <p>&copy; 2025</p>
+                <p>&copy; 2026</p>
             </footer>
         `;
         
