@@ -126,14 +126,362 @@ class BlogManager {
         this.posts = [];
         this.learningPosts = [];
         this.currentPage = this.getCurrentPage();
+        this.lifeClockIntervalId = null;
+        this.lifeClockState = null;
     }
     
     getCurrentPage() {
         const path = window.location.pathname;
         if (path.includes('blog.html')) return 'blog';
         if (path.includes('learning.html')) return 'learning';
+        if (path.includes('life-clock.html')) return 'life';
+        if (path.includes('calculate-yours.html')) return 'calculate';
         if (path.includes('post.html')) return 'post';
         return 'home';
+    }
+
+    getLifeClockConfig() {
+        const MS_PER_DAY = 1000 * 60 * 60 * 24;
+        const MS_PER_YEAR = MS_PER_DAY * 365.25;
+
+        return {
+            birthYear: 2002,
+            birthMonthIndex: 8,
+            birthDay: 14,
+            birthHour: 0,
+            birthMinute: 0,
+            birthSecond: 0,
+            ugandaOffsetHours: 3,
+            lifeExpectancyYears: 64,
+            MS_PER_DAY,
+            MS_PER_YEAR,
+            MS_PER_WEEK: 1000 * 60 * 60 * 24 * 7,
+        };
+    }
+
+    getBirthTimestampMs(config) {
+        const utcHour = config.birthHour - config.ugandaOffsetHours;
+        return Date.UTC(
+            config.birthYear,
+            config.birthMonthIndex,
+            config.birthDay,
+            utcHour,
+            config.birthMinute,
+            config.birthSecond
+        );
+    }
+
+    formatDuration(ms, msPerYear, msPerDay) {
+        const clamped = Math.max(0, Math.floor(ms));
+        const years = Math.floor(clamped / msPerYear);
+        let remainder = clamped - years * msPerYear;
+
+        const days = Math.floor(remainder / msPerDay);
+        remainder -= days * msPerDay;
+
+        const hours = Math.floor(remainder / (1000 * 60 * 60));
+        remainder -= hours * 1000 * 60 * 60;
+
+        const minutes = Math.floor(remainder / (1000 * 60));
+        remainder -= minutes * 1000 * 60;
+
+        const seconds = Math.floor(remainder / 1000);
+
+        const paddedDays = String(days).padStart(2, '0');
+        const paddedHours = String(hours).padStart(2, '0');
+        const paddedMinutes = String(minutes).padStart(2, '0');
+        const paddedSeconds = String(seconds).padStart(2, '0');
+
+        return `${years}y ${paddedDays}d ${paddedHours}h ${paddedMinutes}m ${paddedSeconds}s`;
+    }
+
+    getYearFromTimestamp(timestampMs, offsetHours = 0) {
+        if (offsetHours === 0) {
+            return new Date(timestampMs).getFullYear();
+        }
+
+        return new Date(timestampMs + offsetHours * 60 * 60 * 1000).getUTCFullYear();
+    }
+
+    renderWeeksGrid(grid, birthTimestamp, totalWeeks, initialWeeksLived, yearOffsetHours = 0) {
+        const fragment = document.createDocumentFragment();
+        const weekCells = [];
+        const weekGroupsByYear = new Map();
+        const MS_PER_WEEK = 1000 * 60 * 60 * 24 * 7;
+
+        for (let weekIndex = 0; weekIndex < totalWeeks; weekIndex += 1) {
+            const weekStart = birthTimestamp + weekIndex * MS_PER_WEEK;
+            const year = this.getYearFromTimestamp(weekStart, yearOffsetHours);
+
+            if (!weekGroupsByYear.has(year)) {
+                weekGroupsByYear.set(year, []);
+            }
+
+            weekGroupsByYear.get(year).push(weekIndex);
+        }
+
+        weekGroupsByYear.forEach((weekIndexes, year) => {
+            const yearRow = document.createElement('div');
+            yearRow.className = 'year-row';
+
+            const yearLabel = document.createElement('p');
+            yearLabel.className = 'year-label';
+            yearLabel.textContent = `${year}`;
+
+            const yearWeeks = document.createElement('div');
+            yearWeeks.className = 'year-weeks';
+            yearWeeks.setAttribute('aria-label', `${year}: ${weekIndexes.length} weeks`);
+            yearWeeks.style.setProperty('--weeks-in-year', String(weekIndexes.length));
+
+            weekIndexes.forEach((weekIndex, weekOffsetInYear) => {
+                const cell = document.createElement('div');
+                cell.className = weekIndex < initialWeeksLived ? 'week lived' : 'week remaining';
+                cell.title = `Week ${weekIndex + 1}`;
+                cell.setAttribute('aria-label', `Year ${year}, Week ${weekOffsetInYear + 1}`);
+                yearWeeks.appendChild(cell);
+                weekCells.push(cell);
+            });
+
+            yearRow.appendChild(yearLabel);
+            yearRow.appendChild(yearWeeks);
+            fragment.appendChild(yearRow);
+        });
+
+        grid.innerHTML = '';
+        grid.appendChild(fragment);
+        grid._weekCells = weekCells;
+
+        if (initialWeeksLived < totalWeeks) {
+            const currentCell = weekCells[initialWeeksLived];
+            if (currentCell) currentCell.classList.add('current');
+        }
+    }
+
+    updateWeeksGrid(grid, previousWeeksLived, currentWeeksLived, totalWeeks) {
+        const next = Math.max(0, Math.min(currentWeeksLived, totalWeeks));
+        const prev = Math.max(0, Math.min(previousWeeksLived, totalWeeks));
+        const weekCells = grid._weekCells || [];
+
+        if (next === prev) {
+            if (next < totalWeeks) {
+                const currentCell = weekCells[next];
+                if (currentCell) currentCell.classList.add('current');
+            }
+            return next;
+        }
+
+        if (next > prev) {
+            for (let i = prev; i < next; i += 1) {
+                const cell = weekCells[i];
+                if (!cell) break;
+                cell.classList.remove('remaining', 'current');
+                cell.classList.add('lived');
+            }
+        } else {
+            for (let i = next; i < prev; i += 1) {
+                const cell = weekCells[i];
+                if (!cell) break;
+                cell.classList.remove('lived', 'current');
+                cell.classList.add('remaining');
+            }
+        }
+
+        if (next < totalWeeks) {
+            const currentCell = weekCells[next];
+            if (currentCell) currentCell.classList.add('current');
+        }
+
+        if (prev < totalWeeks && prev !== next) {
+            const oldCurrentCell = weekCells[prev];
+            if (oldCurrentCell) oldCurrentCell.classList.remove('current');
+        }
+
+        return next;
+    }
+
+    async renderLifeClockPage() {
+        const sinceBirthEl = document.getElementById('time-since-birth');
+        const remainingEl = document.getElementById('time-remaining');
+        const progressTextEl = document.getElementById('life-progress-text');
+        const progressFillEl = document.getElementById('life-progress-fill');
+        const weeksGridEl = document.getElementById('weeks-grid');
+
+        if (!sinceBirthEl || !remainingEl || !progressTextEl || !progressFillEl || !weeksGridEl) return;
+
+        const config = this.getLifeClockConfig();
+        const birthTimestamp = this.getBirthTimestampMs(config);
+        const totalLifeMs = config.lifeExpectancyYears * config.MS_PER_YEAR;
+        const deathTimestamp = birthTimestamp + totalLifeMs;
+        const totalWeeks = Math.floor((deathTimestamp - birthTimestamp) / config.MS_PER_WEEK);
+
+        const initialWeeksLived = Math.max(
+            0,
+            Math.min(totalWeeks, Math.floor((Date.now() - birthTimestamp) / config.MS_PER_WEEK))
+        );
+
+        this.renderWeeksGrid(weeksGridEl, birthTimestamp, totalWeeks, initialWeeksLived, config.ugandaOffsetHours);
+
+        this.lifeClockState = {
+            birthTimestamp,
+            deathTimestamp,
+            totalLifeMs,
+            totalWeeks,
+            weeksLived: initialWeeksLived,
+            config,
+        };
+
+        const tick = () => {
+            const now = Date.now();
+            const elapsedMs = Math.max(0, now - this.lifeClockState.birthTimestamp);
+            const remainingMs = Math.max(0, this.lifeClockState.deathTimestamp - now);
+
+            const progressRaw = (now - this.lifeClockState.birthTimestamp) / this.lifeClockState.totalLifeMs;
+            const progress = Math.max(0, Math.min(progressRaw, 1));
+
+            sinceBirthEl.textContent = this.formatDuration(
+                elapsedMs,
+                this.lifeClockState.config.MS_PER_YEAR,
+                this.lifeClockState.config.MS_PER_DAY
+            );
+
+            remainingEl.textContent = this.formatDuration(
+                remainingMs,
+                this.lifeClockState.config.MS_PER_YEAR,
+                this.lifeClockState.config.MS_PER_DAY
+            );
+
+            const progressPercent = (progress * 100).toFixed(2);
+            progressTextEl.textContent = `${progressPercent}%`;
+            progressFillEl.style.width = `${progressPercent}%`;
+
+            const currentWeeksLived = Math.max(
+                0,
+                Math.min(
+                    this.lifeClockState.totalWeeks,
+                    Math.floor((now - this.lifeClockState.birthTimestamp) / this.lifeClockState.config.MS_PER_WEEK)
+                )
+            );
+
+            this.lifeClockState.weeksLived = this.updateWeeksGrid(
+                weeksGridEl,
+                this.lifeClockState.weeksLived,
+                currentWeeksLived,
+                this.lifeClockState.totalWeeks
+            );
+
+            document.body.classList.remove('life-tick');
+            window.requestAnimationFrame(() => {
+                document.body.classList.add('life-tick');
+            });
+        };
+
+        tick();
+
+        if (this.lifeClockIntervalId) {
+            clearInterval(this.lifeClockIntervalId);
+        }
+
+        this.lifeClockIntervalId = setInterval(tick, 1000);
+    }
+
+    clearLifeClockInterval() {
+        if (this.lifeClockIntervalId) {
+            clearInterval(this.lifeClockIntervalId);
+            this.lifeClockIntervalId = null;
+        }
+    }
+
+    getLocalBirthTimestamp(dateInputValue) {
+        const [year, month, day] = dateInputValue.split('-').map(Number);
+        return new Date(year, month - 1, day, 0, 0, 0, 0).getTime();
+    }
+
+    async renderCalculatePage() {
+        const form = document.getElementById('calculate-form');
+        const birthDateInput = document.getElementById('birth-date');
+        const expectancyInput = document.getElementById('life-expectancy');
+
+        const resultsSection = document.getElementById('calculate-results');
+        const progressSection = document.getElementById('calculate-progress');
+        const weeksSection = document.getElementById('calculate-weeks');
+
+        const sinceBirthEl = document.getElementById('calc-time-since');
+        const remainingEl = document.getElementById('calc-time-remaining');
+        const progressTextEl = document.getElementById('calc-progress-text');
+        const progressFillEl = document.getElementById('calc-progress-fill');
+        const weeksSummaryEl = document.getElementById('calc-weeks-summary');
+        const weeksGridEl = document.getElementById('calc-weeks-grid');
+
+        if (!form || !birthDateInput || !expectancyInput) return;
+        if (!resultsSection || !progressSection || !weeksSection) return;
+        if (!sinceBirthEl || !remainingEl || !progressTextEl || !progressFillEl) return;
+        if (!weeksSummaryEl || !weeksGridEl) return;
+
+        this.clearLifeClockInterval();
+
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        birthDateInput.max = `${yyyy}-${mm}-${dd}`;
+
+        const config = this.getLifeClockConfig();
+
+        const startTicker = (birthTimestamp, lifeExpectancyYears) => {
+            const totalLifeMs = lifeExpectancyYears * config.MS_PER_YEAR;
+            const deathTimestamp = birthTimestamp + totalLifeMs;
+            const totalWeeks = Math.floor((deathTimestamp - birthTimestamp) / config.MS_PER_WEEK);
+            let weeksLived = Math.max(
+                0,
+                Math.min(totalWeeks, Math.floor((Date.now() - birthTimestamp) / config.MS_PER_WEEK))
+            );
+
+            this.renderWeeksGrid(weeksGridEl, birthTimestamp, totalWeeks, weeksLived, 0);
+            weeksSummaryEl.textContent = `${weeksLived} of ${totalWeeks} weeks lived`;
+
+            const tick = () => {
+                const now = Date.now();
+                const elapsedMs = Math.max(0, now - birthTimestamp);
+                const remainingMs = Math.max(0, deathTimestamp - now);
+
+                const progressRaw = (now - birthTimestamp) / totalLifeMs;
+                const progress = Math.max(0, Math.min(progressRaw, 1));
+                const progressPercent = (progress * 100).toFixed(2);
+
+                sinceBirthEl.textContent = this.formatDuration(elapsedMs, config.MS_PER_YEAR, config.MS_PER_DAY);
+                remainingEl.textContent = this.formatDuration(remainingMs, config.MS_PER_YEAR, config.MS_PER_DAY);
+                progressTextEl.textContent = `${progressPercent}%`;
+                progressFillEl.style.width = `${progressPercent}%`;
+
+                const currentWeeksLived = Math.max(
+                    0,
+                    Math.min(totalWeeks, Math.floor((now - birthTimestamp) / config.MS_PER_WEEK))
+                );
+
+                weeksLived = this.updateWeeksGrid(weeksGridEl, weeksLived, currentWeeksLived, totalWeeks);
+                weeksSummaryEl.textContent = `${weeksLived} of ${totalWeeks} weeks lived`;
+            };
+
+            tick();
+            this.clearLifeClockInterval();
+            this.lifeClockIntervalId = setInterval(tick, 1000);
+        };
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const birthInputValue = birthDateInput.value;
+            const lifeExpectancyYears = parseFloat(expectancyInput.value);
+
+            if (!birthInputValue || Number.isNaN(lifeExpectancyYears) || lifeExpectancyYears <= 0) return;
+
+            const birthTimestamp = this.getLocalBirthTimestamp(birthInputValue);
+
+            resultsSection.hidden = false;
+            progressSection.hidden = false;
+            weeksSection.hidden = false;
+            startTicker(birthTimestamp, lifeExpectancyYears);
+        });
     }
     
     async loadPosts() {
@@ -243,6 +591,7 @@ class BlogManager {
                         <li><a href="index.html">Mukiibi</a></li>
                         <li><a href="blog.html">Blog</a></li>
                         <li><a href="learning.html">Learning</a></li>
+                        <li><a href="life-clock.html">Life</a></li>
                         <li class="theme-toggle-item">
                             <label for="theme-toggle" class="theme-switch" aria-label="Toggle dark mode">
                                 <input type="checkbox" id="theme-toggle" class="theme-toggle" role="switch" aria-label="Toggle dark mode">
@@ -284,7 +633,9 @@ class BlogManager {
     }
     
     async init() {
-        await this.loadPosts();
+        if (this.currentPage !== 'life' && this.currentPage !== 'calculate') {
+            await this.loadPosts();
+        }
         
         switch (this.currentPage) {
             case 'home':
@@ -298,6 +649,12 @@ class BlogManager {
                 break;
             case 'post':
                 await this.renderPostPage();
+                break;
+            case 'life':
+                await this.renderLifeClockPage();
+                break;
+            case 'calculate':
+                await this.renderCalculatePage();
                 break;
         }
     }

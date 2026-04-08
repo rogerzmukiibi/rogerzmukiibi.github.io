@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate Yours - My Blog</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="assets/favicon_io/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Mukiibi</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="learning.html">Learning</a></li>
+                <li><a href="life-clock.html">Life</a></li>
+                <li class="theme-toggle-item">
+                    <label for="theme-toggle" class="theme-switch" aria-label="Toggle dark mode">
+                        <input type="checkbox" id="theme-toggle" class="theme-toggle" role="switch" aria-label="Toggle dark mode">
+                        <span class="theme-slider" aria-hidden="true"></span>
+                    </label>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="life-clock-page calculate-page">
+        <section class="page-header life-header">
+            <h1>Calculate Yours</h1>
+            <p>Enter your birth date and expected lifespan to see your own life clocks.</p>
+        </section>
+
+        <section class="life-panel">
+            <form id="calculate-form" class="calculate-form">
+                <div class="form-row">
+                    <label for="birth-date">Date of Birth</label>
+                    <input type="date" id="birth-date" required>
+                </div>
+                <div class="form-row">
+                    <label for="life-expectancy">Life Expectancy (years)</label>
+                    <input type="number" id="life-expectancy" min="1" max="130" step="0.1" value="64" required>
+                </div>
+                <button type="submit" class="calc-button">Calculate</button>
+                <p class="calculate-help">Birth time is assumed to be 00:00 in your local timezone.</p>
+            </form>
+        </section>
+
+        <section class="life-timers" id="calculate-results" hidden>
+            <article class="life-panel">
+                <h2>Time Since Birth</h2>
+                <p class="life-timer" id="calc-time-since">00y 00d 00h 00m 00s</p>
+            </article>
+            <article class="life-panel">
+                <h2>Time Remaining</h2>
+                <p class="life-timer" id="calc-time-remaining">00y 00d 00h 00m 00s</p>
+            </article>
+        </section>
+
+        <section class="life-progress" id="calculate-progress" hidden>
+            <h2>Life Progress</h2>
+            <p class="life-progress-text" id="calc-progress-text">0.00%</p>
+            <div class="life-progress-track" aria-hidden="true">
+                <div class="life-progress-fill" id="calc-progress-fill"></div>
+            </div>
+        </section>
+
+        <section class="life-weeks" id="calculate-weeks" hidden>
+            <h2>Life in Weeks</h2>
+            <p class="life-weeks-note">Each square is a week.</p>
+            <p class="calculate-help" id="calc-weeks-summary">0 of 0 weeks lived</p>
+            <div id="calc-weeks-grid" aria-label="Calculated life in weeks grid"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026</p>
+    </footer>
+
+    <script src="script.js?v=20260408"></script>
+    <script src="analytics.js"></script>
+</body>
+</html>

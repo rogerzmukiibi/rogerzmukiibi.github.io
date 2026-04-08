@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Clock</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="assets/favicon_io/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon_io/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon_io/apple-touch-icon.png">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Mukiibi</a></li>
+                <li><a href="blog.html">Blog</a></li>
+                <li><a href="learning.html">Learning</a></li>
+                <li><a href="life-clock.html" class="active">Life</a></li>
+                <li class="theme-toggle-item">
+                    <label for="theme-toggle" class="theme-switch" aria-label="Toggle dark mode">
+                        <input type="checkbox" id="theme-toggle" class="theme-toggle" role="switch" aria-label="Toggle dark mode">
+                        <span class="theme-slider" aria-hidden="true"></span>
+                    </label>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="life-clock-page">
+        <section class="page-header life-header">
+            <h1>Life</h1>
+            <p>A quiet reminder that time is always moving.</p>
+            <p class="life-intro-link">Funny thing is, you can <a href="calculate-yours.html">calculate yours</a> too.</p>
+        </section>
+
+        <section class="life-timers">
+            <article class="life-panel">
+                <h2>Time Since Birth</h2>
+                <p class="life-timer" id="time-since-birth">00y 00d 00h 00m 00s</p>
+            </article>
+
+            <article class="life-panel">
+                <h2>Time Remaining</h2>
+                <p class="life-timer" id="time-remaining">00y 00d 00h 00m 00s</p>
+            </article>
+        </section>
+
+        <section class="life-progress">
+            <h2>Life Progress</h2>
+            <p class="life-progress-text" id="life-progress-text">0.00%</p>
+            <div class="life-progress-track" aria-hidden="true">
+                <div class="life-progress-fill" id="life-progress-fill"></div>
+            </div>
+        </section>
+
+        <section class="life-weeks">
+            <h2>Life in Weeks</h2>
+            <p class="life-weeks-note">Each square is a week.</p>
+            <div id="weeks-grid" aria-label="Life in weeks grid"></div>
+        </section>
+
+        <section class="life-reflection">
+            <h2>Why I Built This</h2>
+
+            <p>My work desktop has a quote I borrowed from Steve Jobs:</p>
+
+            <blockquote>
+                <p>"If today were the last day of my life, would I want to do what I am about to do today?"</p>
+            </blockquote>
+
+            <p>It&rsquo;s simple, but it lingers.</p>
+
+            <p>I think about death more often than most people admit. Not in a heavy or fearful way, but as a reference point. A boundary condition. Something that sharpens everything else.</p>
+
+            <p>Somewhere along the way, I made peace with it.</p>
+
+            <p>But that hasn&rsquo;t made life feel smaller. If anything, it&rsquo;s done the opposite. I still look forward to the big things, the unknowns, the wins, the quiet moments that don&rsquo;t announce themselves as important until much later. Living like each day could be the last doesn&rsquo;t cancel the future. It just makes the present harder to ignore.</p>
+
+            <p>Recently, I came across this page: <a href="https://anthonymorris.dev/life" target="_blank" rel="noopener noreferrer">anthonymorris.dev/life</a>.</p>
+
+            <p>It&rsquo;s simple, just a visualization of a life in time. But it stuck with me. Not because it&rsquo;s dramatic, but because it&rsquo;s honest.</p>
+
+            <p>So I&rsquo;m building my own version.</p>
+
+            <p>I was born at midnight on September 13th, right as the day turned into the 14th. A clean boundary. Almost symbolic. It makes it easy to define a starting point.</p>
+
+            <p>From there, the idea is straightforward:</p>
+
+            <p>Two clocks.</p>
+
+            <p>One counts up, from the moment I was born. The other counts down, toward an estimated end.</p>
+
+            <p>For the second clock, I&rsquo;ll use the current life expectancy in Uganda as a baseline. Not because it&rsquo;s precise, but because it&rsquo;s real enough to matter.</p>
+
+            <p>The goal isn&rsquo;t to be morbid. It&rsquo;s not about obsessing over the end.</p>
+
+            <p>It&rsquo;s about awareness.</p>
+
+            <p>Because time, when left abstract, is easy to waste. But when you can see it, when it&rsquo;s moving, always, in the corner of your screen, it becomes harder to ignore the trade-offs you&rsquo;re making.</p>
+
+            <p>What am I spending my time on?<br>
+            What am I postponing?<br>
+            What actually matters?</p>
+
+            <p>This page won&rsquo;t answer those questions for me.</p>
+
+            <p>But it will make sure I keep asking them.</p>
+
+            <p class="life-reflection-link">Funny thing is, you can <a href="calculate-yours.html">calculate yours</a> too.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026</p>
+    </footer>
+
+    <script src="script.js?v=20260408"></script>
+    <script src="analytics.js"></script>
+</body>
+</html>
