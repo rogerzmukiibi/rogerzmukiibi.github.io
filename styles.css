@@ -121,17 +121,25 @@ main {
 }
 
 .contact-links {
-    display: grid;
-    gap: 6px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0;
+    white-space: nowrap;
     margin-bottom: 12px;
 }
 
 .contact-link {
-    display: inline;
+    display: inline-block;
     padding: 0;
     text-decoration: none;
     color: var(--text-light);
     font-size: 0.95em;
+}
+
+.contact-link + .contact-link::before {
+    content: " | ";
+    color: var(--text-lighter);
 }
 
 .contact-link:hover {
@@ -370,6 +378,6 @@ footer {
     }
     
     .contact-links {
-        gap: 4px;
+        gap: 0;
     }
 }
