@@ -165,7 +165,6 @@ Feel free to fork this repository and make it your own! Some ideas for improveme
 - Include tags for posts
 - Add RSS feed
 - Include comment system
-- Add dark mode
 - Include social sharing buttons
 
 ## License

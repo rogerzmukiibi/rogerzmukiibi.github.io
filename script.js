@@ -66,7 +66,7 @@ class MarkdownParser {
             { pattern: /`(.*?)`/g, replacement: '<code>$1</code>' },
             
             // Links
-            { pattern: /\[([^\]]+)\]\(([^\)]+)\)/g, replacement: '<a href="$2">$1</a>' },
+            { pattern: /\[([^\]]+)\]\(([^\)]+)\)/g, replacement: '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>' },
             
             // Lists
             { pattern: /^\* (.*$)/gm, replacement: '<li>$1</li>' },
@@ -79,6 +79,19 @@ class MarkdownParser {
             { pattern: /\n\n/g, replacement: '</p><p>' },
         ];
     }
+
+    autoLinkPlainUrls(html) {
+        const urlPattern = /\bhttps?:\/\/[^\s<]+[^\s<.,:;"')\]\}]/g;
+        const segments = html.split(/(<[^>]+>)/g);
+
+        return segments.map(segment => {
+            if (segment.startsWith('<')) return segment;
+
+            return segment.replace(urlPattern, (url) => {
+                return `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+            });
+        }).join('');
+    }
     
     parse(markdown) {
         let html = markdown;
@@ -87,6 +100,9 @@ class MarkdownParser {
         this.rules.forEach(rule => {
             html = html.replace(rule.pattern, rule.replacement);
         });
+
+        // Convert plain URLs (for example, pasted YouTube links) into anchors.
+        html = this.autoLinkPlainUrls(html);
         
         // Wrap in paragraphs
         html = '<p>' + html + '</p>';

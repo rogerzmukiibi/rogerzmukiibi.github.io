@@ -26,6 +26,7 @@ This is why the idea of experience-based learning feels so powerful.
 Instead of feeding AI only our interpretations of the world, we could allow it to interact with the world directly, learning patterns, testing hypotheses, and building its own models. Not just consuming knowledge, but generating it.
 
 This perspective aligns with what’s described in _The Bitter Lesson_: http://www.incompleteideas.net/IncIdeas/BitterLesson.html
+
 And further expanded in this paper:
 https://storage.googleapis.com/deepmind-media/Era-of-Experience%20/The%20Era%20of%20Experience%20Paper.pdf
 
