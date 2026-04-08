@@ -60,6 +60,7 @@ class MarkdownParser {
             // Bold and italic
             { pattern: /\*\*(.*?)\*\*/g, replacement: '<strong>$1</strong>' },
             { pattern: /\*(.*?)\*/g, replacement: '<em>$1</em>' },
+            { pattern: /(^|[^\w])_([^_\n]+?)_(?=[^\w]|$)/gm, replacement: '$1<em>$2</em>' },
             
             // Code blocks
             { pattern: /```([\s\S]*?)```/g, replacement: '<pre><code>$1</code></pre>' },
