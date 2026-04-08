@@ -26,7 +26,7 @@ class ThemeManager {
     updateToggleButton() {
         const themeToggle = document.getElementById('theme-toggle');
         if (themeToggle) {
-            themeToggle.textContent = this.theme === 'dark' ? '☀️' : '🌙';
+            themeToggle.textContent = this.theme === 'dark' ? 'Light mode' : 'Dark mode';
             themeToggle.setAttribute('aria-label', 
                 this.theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
             );
@@ -226,7 +226,7 @@ class BlogManager {
                         <li><a href="index.html">Home</a></li>
                         <li><a href="blog.html">Blog</a></li>
                         <li><a href="learning.html">Learning</a></li>
-                        <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">🌙</button></li>
+                        <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">Dark mode</button></li>
                     </ul>
                 </nav>
             </header>
