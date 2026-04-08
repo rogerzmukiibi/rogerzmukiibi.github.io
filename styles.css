@@ -52,6 +52,10 @@ nav ul {
     flex-wrap: wrap;
 }
 
+.theme-toggle-item {
+    margin-left: auto;
+}
+
 nav a {
     text-decoration: none;
     color: var(--text-light);
@@ -69,19 +73,58 @@ nav a.active {
 
 /* Theme toggle button */
 .theme-toggle {
-    background: none;
-    border: 0;
-    color: var(--text-light);
-    padding: 0;
-    cursor: pointer;
-    font-size: 0.95em;
-    font-family: inherit;
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    pointer-events: none;
 }
 
-.theme-toggle:hover {
-    color: var(--text-color);
-    text-decoration: underline;
-    text-underline-offset: 0.18em;
+.theme-switch {
+    position: relative;
+    display: inline-flex;
+    width: 44px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.theme-slider {
+    width: 100%;
+    height: 100%;
+    border: 1px solid var(--border-hover);
+    border-radius: 999px;
+    background: transparent;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.theme-slider::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--text-light);
+    transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.theme-toggle:checked + .theme-slider {
+    border-color: var(--text-light);
+}
+
+.theme-toggle:checked + .theme-slider::after {
+    transform: translateX(20px);
+    background: var(--text-color);
+}
+
+.theme-switch:hover .theme-slider {
+    border-color: var(--text-color);
+}
+
+.theme-switch:focus-within .theme-slider {
+    outline: 2px solid var(--text-lighter);
+    outline-offset: 2px;
 }
 
 /* Main content */
@@ -362,6 +405,10 @@ footer {
     
     nav ul {
         gap: 14px;
+    }
+
+    .theme-toggle-item {
+        margin-left: auto;
     }
     
     .hero h1 {

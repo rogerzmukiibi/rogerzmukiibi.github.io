@@ -6,16 +6,15 @@ class ThemeManager {
     }
     
     init() {
-        // Apply saved theme
         this.applyTheme();
-        
-        // Add event listener to toggle button
-        document.addEventListener('DOMContentLoaded', () => {
-            const themeToggle = document.getElementById('theme-toggle');
-            if (themeToggle) {
-                themeToggle.addEventListener('click', () => this.toggleTheme());
-            }
-        });
+        this.bindToggle();
+    }
+
+    bindToggle() {
+        const themeToggle = document.getElementById('theme-toggle');
+        if (!themeToggle) return;
+
+        themeToggle.onchange = () => this.toggleTheme();
     }
     
     applyTheme() {
@@ -26,8 +25,9 @@ class ThemeManager {
     updateToggleButton() {
         const themeToggle = document.getElementById('theme-toggle');
         if (themeToggle) {
-            themeToggle.textContent = this.theme === 'dark' ? 'Light mode' : 'Dark mode';
-            themeToggle.setAttribute('aria-label', 
+            themeToggle.checked = this.theme === 'dark';
+            themeToggle.setAttribute(
+                'aria-label',
                 this.theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
             );
         }
@@ -223,10 +223,15 @@ class BlogManager {
             <header>
                 <nav>
                     <ul>
-                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html">Mukiibi</a></li>
                         <li><a href="blog.html">Blog</a></li>
                         <li><a href="learning.html">Learning</a></li>
-                        <li><button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">Dark mode</button></li>
+                        <li class="theme-toggle-item">
+                            <label for="theme-toggle" class="theme-switch" aria-label="Toggle dark mode">
+                                <input type="checkbox" id="theme-toggle" class="theme-toggle" role="switch" aria-label="Toggle dark mode">
+                                <span class="theme-slider" aria-hidden="true"></span>
+                            </label>
+                        </li>
                     </ul>
                 </nav>
             </header>
